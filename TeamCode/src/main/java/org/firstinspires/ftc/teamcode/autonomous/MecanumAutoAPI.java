@@ -53,7 +53,7 @@ public class MecanumAutoAPI {
 
         // Motion limits
         public double maxLinearPower = 0.7;
-        public double maxTurnPower   = 0.6;
+        public double maxTurnPower   = 0.3;
 
         // IMU turning PID (degrees)
         public double kP = 0.015;   // power per degree error

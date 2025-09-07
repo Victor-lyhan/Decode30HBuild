@@ -40,7 +40,7 @@ public class AutoAPIDemoOpMode extends LinearOpMode {
         //api.forward(48, 0.3, 5.0);       // forward 24"
         //api.backward(48,0.3,5.0);
         //api.strafeLeft(24, 0.3, 5.0);   // strafe right 12"
-        api.turnLeft(90, 4.0);           // left turn 90 deg
+        api.turnRight(90, 4.0);           // left turn 90 deg
 //        api.backward(12, 0.6, 4.0);      // back 12"
 
         telemetry.addLine("Path complete");
