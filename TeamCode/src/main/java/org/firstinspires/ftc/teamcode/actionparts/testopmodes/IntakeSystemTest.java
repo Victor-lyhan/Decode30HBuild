@@ -4,20 +4,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.actionparts.Intakesystem;
+import org.firstinspires.ftc.teamcode.actionparts.IntakeSystem;
+import org.firstinspires.ftc.teamcode.robot.GearheadsMecanumRobotRR;
 
 @TeleOp(name="Intake System Test", group="Test")
 public class IntakeSystemTest extends LinearOpMode {
 
-    private Intakesystem intakeSystem;
-
+    private IntakeSystem intakeSystem;
+    private GearheadsMecanumRobotRR robot;
     @Override
     public void runOpMode() {
-        // Map the hardware motor (make sure the config name matches DS/RC config)
-        DcMotor intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+        robot = new GearheadsMecanumRobotRR(this);
+        robot.initTeleOp(hardwareMap);
 
         // Create intake system
-        intakeSystem = new Intakesystem(intakeMotor);
+        intakeSystem = robot.intakesystem;
 
         // Optionally call initialize (if you add reset/brake logic later)
         intakeSystem.initialize();
@@ -30,16 +31,18 @@ public class IntakeSystemTest extends LinearOpMode {
         while (opModeIsActive()) {
             // --- Controls ---
             if (gamepad1.a) {
-                intakeSystem.startInTake(); // intake forward
+                intakeSystem.clawOpen(); // intake forward
             } else if (gamepad1.b) {
-                intakeSystem.startReverseInTake(); // intake reverse
+                intakeSystem.clawClose(); // intake reverse
             } else if (gamepad1.x) {
-                intakeSystem.stopInTake(); // stop intake
+                intakeSystem.wristUp(); // stop intake
+            } else if (gamepad1.y) {
+                intakeSystem.wristDown(); // stop intake
             }
 
             // --- Telemetry ---
-            telemetry.addData("Motor Power", intakeMotor.getPower());
-            telemetry.update();
+            //telemetry.addData("Motor Power", intakeSystem.wristMotor.getPower());
+            //telemetry.update();
         }
     }
 }

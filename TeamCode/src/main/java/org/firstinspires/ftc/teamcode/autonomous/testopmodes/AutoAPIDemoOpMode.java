@@ -36,10 +36,11 @@ public class AutoAPIDemoOpMode extends LinearOpMode {
         if (isStopRequested()) return;
 
         // === Example path ===
-        api.forward(24, 0.6, 5.0);       // forward 24"
-        api.strafeRight(12, 0.6, 5.0);   // strafe right 12"
-        api.turnLeft(90, 4.0);           // left turn 90 deg
-        api.backward(12, 0.6, 4.0);      // back 12"
+        //TODO: ALL signs swapped <- forward backward swapped
+        api.forward(-24, 0.5, 5.0);       // forward 24"
+//        api.strafeRight(12, 0.6, 5.0);   // strafe right 12"
+//        api.turnLeft(90, 4.0);           // left turn 90 deg
+//        api.backward(12, 0.6, 4.0);      // back 12"
 
         telemetry.addLine("Path complete");
         telemetry.update();

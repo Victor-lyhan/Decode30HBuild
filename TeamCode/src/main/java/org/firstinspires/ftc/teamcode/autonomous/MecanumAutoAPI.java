@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot.LogoFacingDirection;
@@ -34,17 +36,17 @@ public class MecanumAutoAPI {
     // === TUNE THESE FOR YOUR ROBOT ===
     public static class Params {
         // === Robot geometry (fill from your measurements) ===
-        public double trackWidth = 10.4;        // inches between left & right wheels (user)
-        public double wheelBase  = 10.125;      // inches between front & back wheels (user)
+        public double trackWidth = 10.5;        // inches between left & right wheels (user)
+        public double wheelBase  = 10;      // inches between front & back wheels (user)
 
         // Wheel & encoder
-        public double wheelDiameterIn = 2.0 * 2.045; // 4.09 in (user wheelRadius = 2.045")
-        public double gearReduction   = 1.0;         // output (wheel) / motor
-        public double ticksPerMotorRev = 383.6; // goBILDA 5202 Yellow Jacket 13.7:1 (435 RPM)      // USER-SUPPLIED; verify your motor/encoder CPR
+        public double wheelDiameterIn = 4; // 2.0 * 2.045 = 4.09 in (user wheelRadius = 2.045")
+        public double gearReduction   = 2.64;         // output (wheel) / motor TODO: Change
+        public double ticksPerMotorRev = 435; // goBILDA 5202 Yellow Jacket 13.7:1 (435 RPM)      // USER-SUPPLIED; verify your motor/encoder CPR
         // Note: Many FTC motors are 383.6 or 537.6. If your moves seem off, confirm this value.
 
         // Strafing usually needs more ticks per inch to overcome scrub
-        public double lateralMultiplier = 1.10;       // start ~1.10–1.20, empirically tune
+        public double lateralMultiplier = 1.10;       // start ~1.10–1.20, empirically tune TODO: tune
 
         // Motion limits
         public double maxLinearPower = 0.7;
@@ -88,38 +90,32 @@ public class MecanumAutoAPI {
         this.op = opMode;
         this.params = (p == null) ? new Params() : p;
 
-        fl = hw.get(DcMotorEx.class, flName);
-        fr = hw.get(DcMotorEx.class, frName);
-        bl = hw.get(DcMotorEx.class, blName);
-        br = hw.get(DcMotorEx.class, brName);
+        fr = hw.get(DcMotorEx.class, "fr");
+        fl = hw.get(DcMotorEx.class, "fl");
+        br = hw.get(DcMotorEx.class, "br");
+        bl = hw.get(DcMotorEx.class, "bl");
+        imu = hw.get(BNO055IMU.class, "gyro");
 
-        // Recommended motor directions for typical mecanum (adjust to make +Y forward):
-        fl.setDirection(DcMotorSimple.Direction.REVERSE);
-        fr.setDirection(DcMotorSimple.Direction.FORWARD);
-        bl.setDirection(DcMotorSimple.Direction.REVERSE);
-        br.setDirection(DcMotorSimple.Direction.FORWARD); // left reversed, right forward per user
+        fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        br.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        imu.initialize(parameters);
 
         for (DcMotorEx m : new DcMotorEx[]{fl, fr, bl, br}) {
             m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             m.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             m.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
-
-        // Use BNO055IMU with custom parameters (radians for angles)
-        com.qualcomm.hardware.bosch.BNO055IMU gyro = hw.get(com.qualcomm.hardware.bosch.BNO055IMU.class, "imu");
-        com.qualcomm.hardware.bosch.BNO055IMU.Parameters parameters = new com.qualcomm.hardware.bosch.BNO055IMU.Parameters();
-        parameters.mode = com.qualcomm.hardware.bosch.BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit = com.qualcomm.hardware.bosch.BNO055IMU.AngleUnit.RADIANS;
-        parameters.accelUnit = com.qualcomm.hardware.bosch.BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        gyro.initialize(parameters);
-        this.imu = gyro;
-
         COUNTS_PER_INCH = (params.ticksPerMotorRev * params.gearReduction) / (params.wheelDiameterIn * Math.PI);
     }
 
     public static RevHubOrientationOnRobot defaultREVHubOrientation() {
         // EDIT: set these to match your Control Hub/Expansion Hub mounting
-        return new RevHubOrientationOnRobot(LogoFacingDirection.RIGHT, UsbFacingDirection.FORWARD);
+        return new RevHubOrientationOnRobot(LogoFacingDirection.LEFT, UsbFacingDirection.DOWN); //TODO: Changed
     }
 
     // === Public API ===

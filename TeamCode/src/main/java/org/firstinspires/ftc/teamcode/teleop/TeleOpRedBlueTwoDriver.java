@@ -39,13 +39,17 @@ public class TeleOpRedBlueTwoDriver extends LinearOpMode {
     RisingEdgeDetector detector;
 
     /* Declare OpMode members. */
-    private GearheadsMecanumRobotRR robot;   // Use gearheads robot hardware
+    GearheadsMecanumRobotRR robot;   // Use gearheads robot hardware
 
     //Different action systems used by the Robot
-    private Intakesystem intakesystem;
-
+    private IntakeSystem intakesystem;
+    private launchSystem launchsystem;
     @Override
     public void runOpMode() {
+        robot = new GearheadsMecanumRobotRR(this);
+        initOpMode();
+        intakesystem = robot.intakesystem;
+        launchsystem = robot.launchsystem;
 
         fr = hardwareMap.get(DcMotorEx.class, "fr");
         fl = hardwareMap.get(DcMotorEx.class, "fl");
@@ -67,6 +71,7 @@ public class TeleOpRedBlueTwoDriver extends LinearOpMode {
 
         detector = new RisingEdgeDetector();
 
+        // waitForStart();
 
         //Stop motors to prevent accidental starts after autonomous
         fr.setPower(0);
@@ -74,11 +79,10 @@ public class TeleOpRedBlueTwoDriver extends LinearOpMode {
         br.setPower(0);
         bl.setPower(0);
 
-        initOpMode();
-
         while (opModeIsActive() && !isStopRequested()) {
             moveRobot();
             operateIntake();
+            operateOuttake();
         }
     }
 
@@ -108,18 +112,34 @@ public class TeleOpRedBlueTwoDriver extends LinearOpMode {
     /**
      * Operate intake system
      */
+
     private void operateIntake() {
         if (gamepad2.a) {
-            intakesystem.startInTake();
+            intakesystem.wristDown();
         }
         if (gamepad2.b) {
-            intakesystem.stopInTake();
+            intakesystem.clawOpen();
+        }
+        if (gamepad2.x) {
+            intakesystem.clawClose();
         }
         if (gamepad2.y) {
-            intakesystem.startReverseInTake();
+            intakesystem.wristUp();
         }
     }
 
+    private void operateOuttake() {
+        if (gamepad2.left_bumper || gamepad2.right_bumper) {
+            launchsystem.flapUp(); //TODO: add pause
+            sleep(100);
+            launchsystem.flapDown();
+        }
+        if (gamepad2.left_trigger > 0.7) {
+            launchsystem.spinnersOn();
+        } else if (gamepad2.left_trigger <= 0.7) {
+            launchsystem.spinnersOff();
+        }
+    }
 
 
     /**

@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.actionparts.Intakesystem;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.actionparts.IntakeSystem;
+import org.firstinspires.ftc.teamcode.actionparts.launchSystem;
 
 /**
  * This is NOT an opmode.
@@ -25,9 +29,10 @@ import org.firstinspires.ftc.teamcode.actionparts.Intakesystem;
  * Servo channel:  Servo to open right claw: "right_hand"
  */
 public class GearheadsMecanumRobotRR {
-
+    private Telemetry telemetry;
     //Different action systems used by the Robot
-    public Intakesystem intakesystem;
+    public IntakeSystem intakesystem;
+    public launchSystem launchsystem;
 
     //Gyro
     public BNO055IMU imu;
@@ -41,6 +46,7 @@ public class GearheadsMecanumRobotRR {
     /* Constructor */
     public GearheadsMecanumRobotRR(LinearOpMode opMode) {
         this.curOpMode = opMode;
+        this.telemetry = curOpMode.telemetry;
         hwMap = opMode.hardwareMap;
     }
 
@@ -49,13 +55,34 @@ public class GearheadsMecanumRobotRR {
      * Initializes the intake system
      */
     private void initIntakeSystem() {
-        DcMotor intakeMotor = hwMap.get(DcMotor.class, "intake");
-        intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
+        DcMotor wristMotor = hwMap.get(DcMotor.class, "wristMotor");
+        Servo clawServo = hwMap.get(Servo.class, "clawServo");
 
-        intakesystem = new Intakesystem(intakeMotor);
+        wristMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        wristMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        wristMotor.setDirection(DcMotor.Direction.REVERSE); //TODO: test this
+
+        intakesystem = new IntakeSystem(wristMotor, clawServo, curOpMode);
         intakesystem.initialize();
+    }
+
+    /**
+     * Initializes the launch system
+     */
+    private void initLaunchSystem() {
+        DcMotor leftSpinnerMotor = hwMap.get(DcMotor.class, "leftSpinnerMotor");
+        DcMotor rightSpinnerMotor = hwMap.get(DcMotor.class, "rightSpinnerMotor");
+        Servo gateServo = hwMap.get(Servo.class, "gateServo");
+
+        leftSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //TODO: check
+        rightSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftSpinnerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightSpinnerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftSpinnerMotor.setDirection(DcMotor.Direction.REVERSE); //TODO: test this
+        rightSpinnerMotor.setDirection(DcMotor.Direction.FORWARD); //TODO: test this, reverse this if opposite
+
+        launchsystem = new launchSystem(leftSpinnerMotor, rightSpinnerMotor, gateServo, curOpMode);
+        launchsystem.initialize();
     }
 
 
@@ -109,6 +136,7 @@ public class GearheadsMecanumRobotRR {
         // Save reference to Hardware map
         hwMap = ahwMap;
         initIntakeSystem();
+        initLaunchSystem();
     }
 }
 
