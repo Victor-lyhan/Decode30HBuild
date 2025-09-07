@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name = "Auto Blue", group = "Auto")
-public class AutoBlue extends AbstractAuto {
+@Autonomous(name = "Auto Blue Three Balls", group = "Auto")
+public class AutoBlue_ThreeBalls extends AbstractAuto {
     @Override
     public void runOpMode() throws InterruptedException {
         super.runOpMode();
@@ -35,13 +34,14 @@ public class AutoBlue extends AbstractAuto {
         if (isStopRequested()) return;
 
         // Path
-        intakesystem.clawClose();
+        //intakesystem.clawClose();
 
+        /* Two ball
         api.forward(81, 0.3);
         sleep(500);
         api.turnLeft(45, 15);
         sleep(500);
-        api.backward(25, 0.3);
+        api.backward(22, 0.3);
 
         launchsystem.spinnersOn();
         sleep(1500);
@@ -54,7 +54,37 @@ public class AutoBlue extends AbstractAuto {
         launchsystem.flapUp();
         sleep(500);
         launchsystem.flapDown();
+        */
 
+        intakesystem.clawClose();
+        sleep(500);
+        api.backward(80,0.3);
+        sleep(500);
+        api.turnRight(138, 5);
+        sleep(500);
+        api.backward(24, 0.3);
+
+        launchsystem.spinnersOn();
+        sleep(1500);
+
+        launchsystem.flapUp();
+        sleep(500);
+        launchsystem.flapDown();
+        sleep(1500);
+
+        launchsystem.flapUp();
+        sleep(500);
+        launchsystem.flapDown();
+        sleep(500);
+
+        intakesystem.wristUp();
+        sleep(500);
+        intakesystem.clawOpen();
+        sleep(1500);
+        launchsystem.flapUp();
+        sleep(500);
+
+        launchsystem.spinnersOff();
 
 
         telemetry.addLine("Path complete");
