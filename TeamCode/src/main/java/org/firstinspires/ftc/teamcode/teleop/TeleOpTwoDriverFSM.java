@@ -291,7 +291,6 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
                         .maxDurationMS(500)
                         .onStop(() -> {
                             if (launchsystem != null) {
-                                launchsystem.spinnersOff();
                                 launchsystem.flapDown();
                             }
                         })
@@ -307,27 +306,15 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
                 .add(new TimedStateMachine.Step()
                         .onStart(() -> {
                             if (launchsystem != null) {
-                                launchsystem.spinnersOn();
+                                launchsystem.flapUp();
                             }
                         })
                         .maxDurationMS(1000)
                         .onStop(() -> {
                             if (launchsystem != null) {
-                                launchsystem.flapUp();
                                 launchsystem.spinnersOff();
                             }
                         })
-                )
-
-                .add(new TimedStateMachine.Step()
-                        .onStart(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.flapDown();
-                                launchsystem.spinnersOff();
-                            }
-                        })
-                        .maxDurationMS(1000)
-                        .onStop(() -> {})
                 );
     }
 
