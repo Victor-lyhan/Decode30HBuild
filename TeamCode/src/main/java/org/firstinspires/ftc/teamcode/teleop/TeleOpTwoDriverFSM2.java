@@ -7,6 +7,7 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.teamcode.actionparts.IntakeSystem;
 import org.firstinspires.ftc.teamcode.actionparts.launchSystem;
 import org.firstinspires.ftc.teamcode.robot.GearheadsMecanumRobotRR;
 
+@Disabled
 @TeleOp(name = "TeleOpTwoController-FSM2", group = "TeleOp")
 public class TeleOpTwoDriverFSM2 extends LinearOpMode {
     DcMotorEx fr;

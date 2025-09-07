@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.actionparts.testopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.actionparts.launchSystem;
 import org.firstinspires.ftc.teamcode.robot.GearheadsMecanumRobotRR;
-
+@Disabled
 @TeleOp(name="Launch System Test", group="Test")
 public class launchSystemTest extends LinearOpMode {
 

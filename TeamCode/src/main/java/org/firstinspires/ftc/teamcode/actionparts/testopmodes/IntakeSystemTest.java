@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.actionparts.testopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.actionparts.IntakeSystem;
 import org.firstinspires.ftc.teamcode.robot.GearheadsMecanumRobotRR;
-
+@Disabled
 @TeleOp(name="Intake System Test", group="Test")
 public class IntakeSystemTest extends LinearOpMode {
 

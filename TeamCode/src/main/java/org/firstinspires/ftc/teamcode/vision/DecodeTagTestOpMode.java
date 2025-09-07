@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.vision;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Simple test OpMode to verify Decode AprilTag detection & slot mapping.
  * X = toggle sticky hold (0ms vs 300ms)
  */
+@Disabled
 @TeleOp(name = "Decode Tag Test (2025–26)", group = "Vision")
 public class DecodeTagTestOpMode extends LinearOpMode {
     @Override

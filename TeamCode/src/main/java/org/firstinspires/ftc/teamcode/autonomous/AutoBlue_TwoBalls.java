@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+@Disabled
 @Autonomous(name = "Auto Blue Two Balls", group = "Auto")
 public class AutoBlue_TwoBalls extends AbstractAuto {
     @Override
@@ -43,6 +45,15 @@ public class AutoBlue_TwoBalls extends AbstractAuto {
         sleep(500);
         launchsystem.flapDown();
         sleep(300);
+
+        launchsystem.spinnersOff();
+        sleep(500);
+        intakesystem.clawClose();
+        sleep(500);
+        intakesystem.wristUp();
+        sleep(500);
+
+
         api.backward(35,0.3);
         telemetry.addLine("Path complete");
         telemetry.update();

@@ -38,7 +38,7 @@ public class IntakeSystem {
      */
     public void initialize(){
         //Add code
-        clawWideOpen();
+//        clawWideOpen();
         wristDown();
     }
 

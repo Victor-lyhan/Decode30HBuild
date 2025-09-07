@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode.autonomous.testopmodes;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.MecanumAutoAPI;
-
+@Disabled
 @Autonomous(name = "AutoAPI Demo: Mecanum Basic Moves", group = "Auto")
 public class AutoAPIDemoOpMode extends LinearOpMode {
     @Override
