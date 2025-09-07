@@ -131,7 +131,7 @@ public class TeleOpRedBlueTwoDriver extends LinearOpMode {
     private void operateOuttake() {
         if (gamepad2.left_bumper || gamepad2.right_bumper) {
             launchsystem.flapUp(); //TODO: add pause
-            sleep(100);
+            //sleep(100);
             launchsystem.flapDown();
         }
         if (gamepad2.left_trigger > 0.7) {

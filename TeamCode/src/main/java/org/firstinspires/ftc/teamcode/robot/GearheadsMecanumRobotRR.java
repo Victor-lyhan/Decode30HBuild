@@ -76,8 +76,8 @@ public class GearheadsMecanumRobotRR {
 
         leftSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //TODO: check
         rightSpinnerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftSpinnerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightSpinnerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftSpinnerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightSpinnerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftSpinnerMotor.setDirection(DcMotor.Direction.REVERSE); //TODO: test this
         rightSpinnerMotor.setDirection(DcMotor.Direction.FORWARD); //TODO: test this, reverse this if opposite
 
