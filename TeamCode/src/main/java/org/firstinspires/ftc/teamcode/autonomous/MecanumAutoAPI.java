@@ -46,7 +46,7 @@ public class MecanumAutoAPI {
         // Note: Many FTC motors are 383.6 or 537.6. If your moves seem off, confirm this value.
 
         // Strafing usually needs more ticks per inch to overcome scrub
-        public double lateralMultiplier = 1.10;       // start ~1.10–1.20, empirically tune TODO: tune
+        public double lateralMultiplier = 0.9;       // start ~1.10–1.20, empirically tune TODO: tune
 
         // linear multiplier
         public double linearMultiplier = 0.85;
@@ -132,7 +132,7 @@ public class MecanumAutoAPI {
     }
 
     public void strafeRight(double inches, double power, double timeoutS) {
-        double t = inches * params.lateralMultiplier;
+        double t = -inches * params.lateralMultiplier;
         // mecanum strafe: + - - + (for FR,FL,BL,BR depending on directions). With our directions:
         linearMove(+t, -t, -t, +t, clamp(power, 0, params.maxLinearPower), timeoutS);
     }
