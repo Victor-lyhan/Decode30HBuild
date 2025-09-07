@@ -40,13 +40,16 @@ public class MecanumAutoAPI {
         public double wheelBase  = 10;      // inches between front & back wheels (user)
 
         // Wheel & encoder
-        public double wheelDiameterIn = 4; // 2.0 * 2.045 = 4.09 in (user wheelRadius = 2.045")
-        public double gearReduction   = 2.64;         // output (wheel) / motor TODO: Change
+        public double wheelDiameterIn = 4.09; // 2.0 * 2.045 = 4.09 in (user wheelRadius = 2.045")
+        public double gearReduction   = 1;         // output (wheel) / motor TODO: Change
         public double ticksPerMotorRev = 435; // goBILDA 5202 Yellow Jacket 13.7:1 (435 RPM)      // USER-SUPPLIED; verify your motor/encoder CPR
         // Note: Many FTC motors are 383.6 or 537.6. If your moves seem off, confirm this value.
 
         // Strafing usually needs more ticks per inch to overcome scrub
         public double lateralMultiplier = 1.10;       // start ~1.10–1.20, empirically tune TODO: tune
+
+        // linear multiplier
+        public double linearMultiplier = 0.85;
 
         // Motion limits
         public double maxLinearPower = 0.7;
@@ -120,6 +123,7 @@ public class MecanumAutoAPI {
 
     // === Public API ===
     public void forward(double inches, double power, double timeoutS) {
+        inches = -inches * params.linearMultiplier;
         linearMove(inches, inches, inches, inches, clamp(power, 0, params.maxLinearPower), timeoutS);
     }
 
