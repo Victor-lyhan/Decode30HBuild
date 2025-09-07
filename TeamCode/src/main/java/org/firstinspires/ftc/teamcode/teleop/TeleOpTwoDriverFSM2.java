@@ -22,8 +22,8 @@ import org.firstinspires.ftc.teamcode.actionparts.IntakeSystem;
 import org.firstinspires.ftc.teamcode.actionparts.launchSystem;
 import org.firstinspires.ftc.teamcode.robot.GearheadsMecanumRobotRR;
 
-@TeleOp(name = "TeleOpTwoController-FSM1", group = "TeleOp")
-public class TeleOpTwoDriverFSM extends LinearOpMode {
+@TeleOp(name = "TeleOpTwoController-FSM2", group = "TeleOp")
+public class TeleOpTwoDriverFSM2 extends LinearOpMode {
     DcMotorEx fr;
     DcMotorEx fl;
     DcMotorEx br;
@@ -46,7 +46,6 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
     private IntakeSystem intakesystem;
     private launchSystem launchsystem;
     private final TimedStateMachine intakeFSM = new TimedStateMachine();
-    private final TimedStateMachine launchFSM = new TimedStateMachine();
 
     @Override
     public void runOpMode() {
@@ -82,10 +81,8 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
         bl.setPower(0);
 
         setupIntakeFSM();
-        setupLaunchFSM();
 
         boolean prevX = false;
-        boolean prevY = false;
 
         while (opModeIsActive() && !isStopRequested()) {
 
@@ -111,26 +108,7 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
             telemetry.addData("Awaiting Advance", intakeFSM.isAwaitingAdvance());
             telemetry.update();
 
-
-            // ADDED: FSM controls — B to start, Back to cancel
-            boolean yPressed = gamepad2.y && !prevY; // rising edge
-
-            if (gamepad2.back) {
-                launchFSM.cancel();
-                stopSubsystems();
-            }
-
-            if (yPressed) {
-                launchFSM.onTrigger();   // <- exactly matches your rules
-            }
-            prevY = gamepad2.y;
-
-            launchFSM.update();
-
-            telemetry.addData("FSM", launchFSM.isRunning() ? "RUN" : "IDLE");
-            telemetry.addData("Step", "%d / %d", launchFSM.currentIndex(), launchFSM.size());
-            telemetry.addData("Awaiting Advance", launchFSM.isAwaitingAdvance());
-            telemetry.update();
+            operateOuttake();
 
         }
     }
@@ -237,103 +215,22 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
             );
     }
 
-    private void setupLaunchFSM() {
-        launchFSM.clear()
-                /**
-                 * shoot first
-                 * outtake spinners: on
-                 * wait: 1000
-                 * outtake flap: up
-                 */
-                .add(new TimedStateMachine.Step()
-                        .onStart(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.spinnersOn();
-                            }
-                        })
-                        .maxDurationMS(1000)
-                        .onStop(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.flapUp();
-                            }
-                        })
-                )
-                /**
-                 * 2. load claw ball
-                 * outtake flap: down
-                 * wait 500
-                 * gamepad2.x
-                 */
-                .add(new TimedStateMachine.Step()
-                        .onStart(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.flapDown();
-                            }
-                        })
-                        .maxDurationMS(500)
-                        .onStop(() -> {
-                            intakeFSM.onTrigger();
-                        })
-                )
-
-                /**
-                 * 3.  shoot second
-                 * outtake flap: up
-                 * wait 1000
-                 * outtake flap: down
-                 */
-                .add(new TimedStateMachine.Step()
-                        .onStart(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.flapUp();
-                            }
-                        })
-                        .maxDurationMS(500)
-                        .onStop(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.spinnersOff();
-                                launchsystem.flapDown();
-                            }
-                        })
-                )
-
-                /**
-                 * 4. shoot third
-                 * a. outtake flap: up
-                 * b. wait: 1000
-                 * outtake flap: down
-                 * outtake spinners: off
-                 */
-                .add(new TimedStateMachine.Step()
-                        .onStart(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.spinnersOn();
-                            }
-                        })
-                        .maxDurationMS(1000)
-                        .onStop(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.flapUp();
-                                launchsystem.spinnersOff();
-                            }
-                        })
-                )
-
-                .add(new TimedStateMachine.Step()
-                        .onStart(() -> {
-                            if (launchsystem != null) {
-                                launchsystem.flapDown();
-                                launchsystem.spinnersOff();
-                            }
-                        })
-                        .maxDurationMS(1000)
-                        .onStop(() -> {})
-                );
-    }
-
     // Helper to stop all subsystems when cancelling FSM
     private void stopSubsystems() {
 //        if (intakesystem != null) intakesystem.stopInTake();
 //        if (elevator != null) elevator.stop();
+    }
+
+    private void operateOuttake() {
+        if (gamepad2.left_bumper || gamepad2.right_bumper) {
+            launchsystem.flapUp(); //TODO: add pause
+            //sleep(100);
+            launchsystem.flapDown();
+        }
+        if (gamepad2.left_trigger > 0.7) {
+            launchsystem.spinnersOn();
+        } else if (gamepad2.left_trigger <= 0.7) {
+            launchsystem.spinnersOff();
+        }
     }
 }

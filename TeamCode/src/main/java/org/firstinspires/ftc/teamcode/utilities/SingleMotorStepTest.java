@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.utilities;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+@TeleOp(name = "MotorStepTest", group = "TeleOp")
 public class SingleMotorStepTest extends LinearOpMode {
     DcMotor testMotor;
     int currentTarget = 0;
@@ -10,13 +11,15 @@ public class SingleMotorStepTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Map the motor (make sure the name matches your RC configuration)
-        testMotor = hardwareMap.dcMotor.get("test_motor");
+        testMotor = hardwareMap.dcMotor.get("wristServo");
 
         // Set direction (reverse if needed)
         testMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // Reset encoder and set mode
         testMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        testMotor.setTargetPosition(currentTarget);
         testMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         telemetry.addLine("Ready to run motor step test. A=+10, B=+50, X=-10, Y=-50");

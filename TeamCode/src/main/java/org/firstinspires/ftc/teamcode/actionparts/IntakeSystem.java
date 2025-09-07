@@ -19,10 +19,11 @@ public class IntakeSystem {
     private OpMode opmode;
 
     // TODO: Change parameters
-    private static final double OPEN_POSITION = 0.8;
-    private static final double CLOSED_POSITION = 0.2;
-    private static final int UP_POSITION = 100;
-    private static final int DOWN_POSITION = 300;
+    private static final double WIDE_POSITION = 0.97; //ball pick up, servo
+    private static final double OPEN_POSITION = 0.76; //ball release
+    private static final double CLOSED_POSITION = 0.69;
+    private static final int UP_POSITION = 927; // wristMotor
+    private static final int DOWN_POSITION = -2;
 
 
     public IntakeSystem(DcMotor wristMotor, Servo clawServo, OpMode opmode) {
@@ -37,35 +38,42 @@ public class IntakeSystem {
      */
     public void initialize(){
         //Add code
-        clawOpen();
+        clawWideOpen();
         wristDown();
     }
 
-    public void clawOpen() {
-        //clawServo.setPosition(OPEN_POSITION);
-        telemetry.addData("status","claw open");
-        telemetry.update();
+    public void clawWideOpen() {
+        clawServo.setPosition(WIDE_POSITION);
+//        telemetry.addData("status","claw open");
+//        telemetry.update();
     }
 
+    public void clawOpen() {
+        clawServo.setPosition(OPEN_POSITION);
+//        telemetry.addData("status","claw open");
+//        telemetry.update();
+    }
+
+
     public void clawClose() {
-        //clawServo.setPosition(CLOSED_POSITION);
-        telemetry.addData("status","claw close");
-        telemetry.update();
+        clawServo.setPosition(CLOSED_POSITION);
+//        telemetry.addData("status","claw close");
+//        telemetry.update();
     }
 
     public void wristUp() {
-//        wristMotor.setTargetPosition(UP_POSITION);
-//        wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        wristMotor.setPower(0.5); //TODO: Might need to change direction
-        telemetry.addData("status","wrist up");
-        telemetry.update();
+        wristMotor.setTargetPosition(UP_POSITION);
+        wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wristMotor.setPower(0.8); //TODO: Might need to change direction
+//        telemetry.addData("status","wrist up");
+//        telemetry.update();
     }
 
     public void wristDown() {
-//        wristMotor.setTargetPosition(DOWN_POSITION);
-//        wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        wristMotor.setPower(0.5); //TODO: Might need to change direction
-        telemetry.addData("status","wrist down");
-        telemetry.update();
+        wristMotor.setTargetPosition(DOWN_POSITION);
+        wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wristMotor.setPower(0.8); //TODO: Might need to change direction
+//        telemetry.addData("status","wrist down");
+//        telemetry.update();
     }
 }
