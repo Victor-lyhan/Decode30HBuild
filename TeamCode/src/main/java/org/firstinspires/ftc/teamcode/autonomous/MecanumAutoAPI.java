@@ -127,8 +127,16 @@ public class MecanumAutoAPI {
         linearMove(inches, inches, inches, inches, clamp(power, 0, params.maxLinearPower), timeoutS);
     }
 
+    public void forward(double inches, double power) {
+        forward(inches, power, 15);
+    }
+
     public void backward(double inches, double power, double timeoutS) {
         forward(-inches, power, timeoutS);
+    }
+
+    public void backward(double inches, double power) {
+        backward(inches, power, 15);
     }
 
     public void strafeRight(double inches, double power, double timeoutS) {
@@ -137,8 +145,15 @@ public class MecanumAutoAPI {
         linearMove(+t, -t, -t, +t, clamp(power, 0, params.maxLinearPower), timeoutS);
     }
 
+    public void strafeRight(double inches, double power) {
+        strafeRight(inches, power, 15);
+    }
     public void strafeLeft(double inches, double power, double timeoutS) {
         strafeRight(-inches, power, timeoutS);
+    }
+
+    public void strafeLeft(double inches, double power) {
+        strafeLeft(inches, power, 15);
     }
 
     public void turnRight(double degrees, double timeoutS) { // CW negative yaw in IMU framework usually
