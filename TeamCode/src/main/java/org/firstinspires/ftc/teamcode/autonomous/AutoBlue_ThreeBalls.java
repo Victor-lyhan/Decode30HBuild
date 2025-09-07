@@ -60,9 +60,9 @@ public class AutoBlue_ThreeBalls extends AbstractAuto {
         sleep(500);
         api.backward(80,0.3);
         sleep(500);
-        api.turnRight(138, 10);
+        api.turnRight(138, 5);
         sleep(500);
-        api.backward(24, 0.3);
+        api.backward(7, 0.3);
 
         launchsystem.spinnersOn();
         sleep(1500);
@@ -85,6 +85,8 @@ public class AutoBlue_ThreeBalls extends AbstractAuto {
         sleep(500);
 
         launchsystem.spinnersOff();
+
+        api.backward(55, 0.3);
 
 
         telemetry.addLine("Path complete");

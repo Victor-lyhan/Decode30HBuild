@@ -54,8 +54,8 @@ public class launchSystem {
     }
 
     public void spinnersOn() {
-        leftSpinnerMotor.setPower(-0.6); //TODO: Might need to change direction
-        rightSpinnerMotor.setPower(-0.6);
+        leftSpinnerMotor.setPower(-0.55); //TODO: Might need to change direction
+        rightSpinnerMotor.setPower(-0.55);
 //        telemetry.addData("status","spinners on");
 //        telemetry.update();
     }

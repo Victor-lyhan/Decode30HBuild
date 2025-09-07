@@ -33,36 +33,13 @@ public class AutoRed_ThreeBalls extends AbstractAuto {
         waitForStart();
         if (isStopRequested()) return;
 
-        // Path
-        //intakesystem.clawClose();
-
-        /* Two ball
-        api.forward(81, 0.3);
-        sleep(500);
-        api.turnLeft(45, 15);
-        sleep(500);
-        api.backward(22, 0.3);
-
-        launchsystem.spinnersOn();
-        sleep(1500);
-
-        launchsystem.flapUp();
-        sleep(500);
-        launchsystem.flapDown();
-        sleep(500);
-
-        launchsystem.flapUp();
-        sleep(500);
-        launchsystem.flapDown();
-        */
-
         intakesystem.clawClose();
         sleep(500);
         api.backward(80,0.3);
         sleep(500);
-        api.turnRight(138, 10);
+        api.turnLeft(138, 10);
         sleep(500);
-        api.backward(24, 0.3);
+        api.backward(7, 0.3);
 
         launchsystem.spinnersOn();
         sleep(1500);
@@ -86,6 +63,7 @@ public class AutoRed_ThreeBalls extends AbstractAuto {
 
         launchsystem.spinnersOff();
 
+        api.backward(55, 0.3);
 
         telemetry.addLine("Path complete");
         telemetry.update();

@@ -32,7 +32,7 @@ public class AutoBlue_TwoBalls extends AbstractAuto {
         sleep(500);
         api.turnLeft(45, 5);
         sleep(500);
-        api.backward(25, 0.3);
+        api.backward(7, 0.3);
         launchsystem.spinnersOn();
         sleep(1500);
         launchsystem.flapUp();
@@ -42,6 +42,8 @@ public class AutoBlue_TwoBalls extends AbstractAuto {
         launchsystem.flapUp();
         sleep(500);
         launchsystem.flapDown();
+        sleep(300);
+        api.backward(35,0.3);
         telemetry.addLine("Path complete");
         telemetry.update();
         sleep(1000);
