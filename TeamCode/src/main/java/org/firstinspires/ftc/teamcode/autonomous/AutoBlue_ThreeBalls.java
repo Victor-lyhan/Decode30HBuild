@@ -62,7 +62,7 @@ public class AutoBlue_ThreeBalls extends AbstractAuto {
         sleep(500);
         api.turnRight(138, 5);
         sleep(500);
-        api.backward(7, 0.3);
+        api.backward(10, 0.3);
 
         launchsystem.spinnersOn();
         sleep(1500);

@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.actionparts.IntakeSystem;
 import org.firstinspires.ftc.teamcode.actionparts.launchSystem;
 import org.firstinspires.ftc.teamcode.robot.GearheadsMecanumRobotRR;
 
-@TeleOp(name = "TeleOpTwoController-FSM1", group = "TeleOp")
+@TeleOp(name = "Main-TeleOpTwoController-FSM1", group = "TeleOp")
 public class TeleOpTwoDriverFSM extends LinearOpMode {
     DcMotorEx fr;
     DcMotorEx fl;
@@ -196,7 +196,7 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
                         intakesystem.clawWideOpen();
                     }
                 })
-                .maxDurationMS(1000)
+                .maxDurationMS(500)
                 .onStop(() -> {
                     if (launchsystem != null) {
 //                        launchsystem.flapDown();
@@ -213,7 +213,7 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
                         intakesystem.clawClose();
                     }
                 })
-                .maxDurationMS(1000)
+                .maxDurationMS(300)
                 .onStop(() -> {})
             )
 
@@ -228,7 +228,7 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
                         intakesystem.wristUp();
                     }
                 })
-                .maxDurationMS(1000)
+                .maxDurationMS(700)
                 .onStop(() -> {
                     if (intakesystem != null) {
                        intakesystem.clawOpen();
@@ -313,6 +313,7 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
                         .onStop(() -> {
                             if (launchsystem != null) {
                                 launchsystem.spinnersOff();
+                                launchsystem.flapDown();
                             }
                         })
                 );

@@ -76,4 +76,15 @@ public class IntakeSystem {
 //        telemetry.addData("status","wrist down");
 //        telemetry.update();
     }
+
+    public void quickHit(){
+        //TODO:If time, create auto pickup and drop routine
+    }
+
+    public void autoPickuponDetect(){
+        //TODO:If time, create routine to auto-pickup based on detect
+    }
+
+
 }
+
