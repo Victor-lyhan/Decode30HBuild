@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Auto Blue Three Balls", group = "Auto")
-public class AutoBlue_ThreeBalls extends AbstractAuto {
+@Autonomous(name = "Auto Red Three Balls", group = "Auto")
+public class AutoRed_ThreeBalls extends AbstractAuto {
     @Override
     public void runOpMode() throws InterruptedException {
         super.runOpMode();
