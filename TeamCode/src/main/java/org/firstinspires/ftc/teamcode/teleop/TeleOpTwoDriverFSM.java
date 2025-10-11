@@ -90,7 +90,6 @@ public class TeleOpTwoDriverFSM extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
 
             moveRobot();
-
             // ADDED: FSM controls — X to start, Back to cancel
             boolean xPressed = gamepad2.x && !prevX; // rising edge
 
